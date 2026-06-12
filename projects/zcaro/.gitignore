@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
 .Python
 *.egg-info/
 dist/
@@ -14,7 +15,4 @@ venv/
 .idea/
 *.log
 .ipynb_checkpoints/
-projects/*/data/*.png
-projects/*/data/*.jpg
-projects/*/data/*.jpeg
-projects/zcaro/image/
+image/*.png

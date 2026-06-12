@@ -13,9 +13,11 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, QThread, QTimer, pyqtSignal
 from PyQt6.QtGui import QImage, QPixmap
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from tool.screenshot import ScreenShot, OverlayRegionSelector
-from tool.board_finder import find_board, compute_grid, sort_corners
+_HERE = Path(__file__).resolve()
+sys.path.insert(0, str(_HERE.parents[1]))   # projects/zcaro -> src.*
+sys.path.insert(0, str(_HERE.parents[3]))   # CV-Workspace   -> common.*
+from common.screenshot import ScreenShot, OverlayRegionSelector
+from src.board_finder import find_board, compute_grid, sort_corners
 
 
 class DetectionWorker(QThread):

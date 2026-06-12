@@ -17,9 +17,11 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QImage, QPixmap
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from tool.doc_finder import (METHODS, find_document, refine_quad,
-                             refine_corner, warp_document, order_quad)
+_HERE = Path(__file__).resolve()
+sys.path.insert(0, str(_HERE.parents[1]))   # projects/zcaro -> src.*
+sys.path.insert(0, str(_HERE.parents[3]))   # CV-Workspace   -> common.*
+from src.doc_finder import (METHODS, find_document, refine_quad,
+                            refine_corner, warp_document, order_quad)
 
 HANDLE_HIT_PX = 16          # grab radius around a corner, in widget pixels
 DISP_H        = 1000        # editor working resolution (display + preview warp)

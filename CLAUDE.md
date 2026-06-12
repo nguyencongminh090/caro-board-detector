@@ -1,30 +1,38 @@
-# Zcaro — OpenCV Project
+# CV-Workspace
 
-## Project
-Dự án Computer Vision dùng OpenCV + Python, tập trung vào:
-- **Board detection**: Tìm bảng/vùng quan trọng từ screenshot qua contour/edge detection
-- **Screen capture pipeline**: PyQt6 + mss (Wayland-compatible, fallback spectacle)
-- **CV experiments**: Jupyter notebooks (test.ipynb, test2.ipynb, test3.ipynb)
+Monorepo cho các OpenCV / Computer Vision projects cá nhân.
 
-## Stack
-- Python, OpenCV (`cv2`), NumPy, Matplotlib
-- PyQt6 (UI overlay), mss (screen capture)
-- Jupyter Notebook (experiments)
-- Pyright (type checking)
+## Cấu trúc
 
-## Conventions
-- Hàm CV thuần (no side effects) đặt trong `tool/` hoặc module riêng
-- Notebook dùng để prototyping; code ổn định chuyển sang `.py`
-- Ảnh input/output lưu tại `image/` với timestamp auto-generated
-- `tool/screenshot.py`: `ScreenShot` class là util capture chính — không duplicate
+```
+CV-Workspace/
+├── common/          # shared utils: screenshot, viz, io, geometry
+├── projects/
+│   ├── zcaro/       # board tracker + document capture (PyQt6, OpenCV)
+│   └── aesthetic-3d/ # 3D aesthetic field research (PyTorch + 3DGS)
+└── pyrightconfig.json
+```
 
-## CV Approach (đã dùng)
-- Edge detection: Canny, custom Sobel + NMS + hysteresis
-- Contour: `findContours` + `approxPolyDP` + `isContourConvex`
-- Board finding: filter by 4-corner convex quadrilateral, max area
+## Convention
 
-## Tone cho AI
-- Trả lời bằng **tiếng Việt**
-- Ngắn gọn, trực tiếp, không ví dụ mơ hồ
-- Khi giải thích CV: nêu lý do toán học/nguyên lý, không chỉ nêu API
-- Ưu tiên fix code thực tế trong project, không tạo boilerplate mới
+- Ngôn ngữ: Python 3.13
+- Mỗi project có `src/` (code ổn định), `notebooks/`, `data/` (gitignored), `docs/`
+- Shared code đặt trong `common/`, import bằng `from common.xxx import ...`
+- `sys.path` được set trong mỗi entry-point script — không dùng relative import ngầm
+
+## Import pattern (trong src/)
+
+```python
+_HERE = Path(__file__).resolve()
+sys.path.insert(0, str(_HERE.parents[1]))   # projects/<name>  -> src.*
+sys.path.insert(0, str(_HERE.parents[3]))   # CV-Workspace     -> common.*
+```
+
+## Projects
+
+### zcaro
+Board detection (real-time HSV + contour) và Document Capture (perspective warp, snap-to-edge).
+Entry points: `src/board_tracker.py`, `src/doc_capture.py`
+
+### aesthetic-3d
+Research: 3D Aesthetic Field (paper 008). Stack: PyTorch, DepthSplat, gsplat.
