@@ -1,0 +1,8 @@
+{
+  "source_directories": [
+    "."
+  ],
+  "search_path": [
+    "/home/ngmint/.local/lib/python3.13/site-packages"
+  ]
+}
